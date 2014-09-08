@@ -119,5 +119,5 @@ void CA_ClearAllMarks (void);
 void CA_CacheGrChunk (int chunk);
 void CA_CacheMap (int mapnum);
 
-void CA_CacheMarks (char *title);
+void CA_CacheMarks (char *title, boolean cachedownlevel);
 

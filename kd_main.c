@@ -374,11 +374,20 @@ void Quit (char *error)
   ShutdownId ();
   if (error && *error)
   {
+	clrscr();
 	puts(error);
+	puts("\n");
+	puts("For techinical assistance with running this software, type HELP at");
+	puts("    the DOS prompt or call Gamer's Edge at 1-318-221-8311");
 	exit(1);
   }
 
-  exit(0);
+	_argc = 2;
+	_argv[1] = "LAST.SHL";
+	_argv[2] = "ENDSCN.SCN";
+	_argv[3] = NULL;
+	if (execv("LOADSCN.EXE", _argv) == -1)
+		Quit("Couldn't find executable LOADSCN.EXE.\n");
 }
 
 //===========================================================================
@@ -393,7 +402,9 @@ void Quit (char *error)
 ==========================
 */
 
+#if 0
 #include "piracy.h"
+#endif
 
 void InitGame (void)
 {
@@ -402,10 +413,12 @@ void InitGame (void)
 	MM_Startup ();
 
 
+#if 0
 	// Handle piracy screen...
 	//
 	movedata(FP_SEG(PIRACY),(unsigned)PIRACY,0xb800,displayofs,4000);
 	while ((bioskey(0)>>8) != sc_Return);
+#endif
 
 
 #if GRMODE == EGAGR
@@ -435,7 +448,7 @@ void InitGame (void)
 	SD_Startup ();
 	US_Startup ();
 
-	US_UpdateTextScreen();
+//	US_UpdateTextScreen();
 
 	CA_Startup ();
 	US_Setup ();
@@ -453,7 +466,7 @@ void InitGame (void)
 	for (i=KEEN_LUMP_START;i<=KEEN_LUMP_END;i++)
 		CA_MarkGrChunk(i);
 
-	CA_CacheMarks (NULL);
+	CA_CacheMarks (NULL, 0);
 
 	MM_SetLock (&grsegs[STARTFONT],true);
 	MM_SetLock (&grsegs[STARTFONTM],true);
@@ -484,8 +497,30 @@ void InitGame (void)
 ==========================
 */
 
+static	char			*EntryParmStrings[] = {"detour",nil};
+
 void main (void)
 {
+	boolean LaunchedFromShell = false;
+	short i;
+
+	for (i = 1;i < _argc;i++)
+	{
+		switch (US_CheckParm(_argv[i],EntryParmStrings))
+		{
+		case 0:
+			LaunchedFromShell = true;
+			break;
+		}
+	}
+
+	if (!LaunchedFromShell)
+	{
+		clrscr();
+		puts("You must type START at the DOS prompt to run KEEN DREAMS.");
+		exit(0);
+	}
+
 	InitGame();
 
 	DemoLoop();					// DemoLoop calls Quit when everything is done

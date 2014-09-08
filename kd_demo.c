@@ -18,6 +18,7 @@
 
 // KD_DEMO.C
 
+#include <dir.h>
 #include "KD_DEF.H"
 
 #pragma	hdrstop
@@ -430,7 +431,15 @@ DemoLoop (void)
 	char		*s;
 	word		move;
 	longword	lasttime;
+	char *FileName1;
+	char *FileName2;
+	struct Shape FileShape1;
+	struct Shape FileShape2;
+	struct ffblk ffblk;
 	WindowRec	mywin;
+	int bufsave	= bufferofs;
+	int dissave	= displayofs;
+
 
 #if FRILLS
 //
@@ -450,94 +459,68 @@ DemoLoop (void)
 //
 	US_SetLoadSaveHooks(LoadGame,SaveGame,ResetGame);
 	restartgame = gd_Continue;
+
+	if (findfirst("KDREAMS.CMP", &ffblk, 0) == -1)
+		Quit("Couldn't find KDREAMS.CMP");
+
 	while (true)
 	{
-		// Load the Title map
-		gamestate.mapon = 20;		// title map number
+
 		loadedgame = false;
-		SetupGameLevel(true);
+
+		FileName1 = "TITLESCR.LBM";
+		if (LoadLIBShape("KDREAMS.CMP", FileName1, &FileShape1))
+			Quit("Can't load TITLE SCREEN");
+		FileName2 = "CREDITS.LBM";
+		if (LoadLIBShape("KDREAMS.CMP", FileName2, &FileShape2))
+			Quit("Can't load CREDITS SCREEN");
+
 
 		while (!restartgame && !loadedgame)
 		{
+
 			VW_InitDoubleBuffer();
 			IN_ClearKeysDown();
 
 			while (true)
 			{
-				// Display the Title map
-				RF_NewPosition((5 * TILEGLOBAL) + (TILEGLOBAL / 2),
-								(TILEGLOBAL * 2) + (TILEGLOBAL / 2)
-								+ (TILEGLOBAL / 4));
-				RF_ForceRefresh();
-				RF_Refresh();
-				RF_Refresh();
 
-				if (Wait(TickBase * 2))
+				VW_SetScreen(0, 0);
+				MoveGfxDst(0, 200);
+				UnpackEGAShapeToScreen(&FileShape1, 0, 0);
+				VW_ScreenToScreen (64*200,0,40,200);
+
+				if (IN_UserInput(TickBase * 8, false))
 					break;
 
-				mywin.x = (16 * 13) + 4;
-				mywin.y = 0;
-				mywin.w = 16 * 7;
-				mywin.h = 200;
-				mywin.px = mywin.x + 0;
-				mywin.py = mywin.y + 10;
-				s =		"Game\n"
-						"John Carmack\n"
-						"\n"
-						"Utilities\n"
-						"John Romero\n"
-						"\n"
-						"Interface/Sound\n"
-						"Jason Blochowiak\n"
-						"\n"
-						"Creative Director\n"
-						"Tom Hall\n"
-						"\n"
-						"Art\n"
-						"Adrian Carmack\n";
-				if (ShowText((9 * TILEGLOBAL) - (PIXGLOBAL * 2),&mywin,s))
+				MoveGfxDst(0, 200);
+				UnpackEGAShapeToScreen(&FileShape2, 0, 0);
+				VW_ScreenToScreen (64*200,0,40,200);
+
+				if (IN_UserInput(TickBase * 7, false))
 					break;
 
-				mywin.x = 4;
-				mywin.y = 0;
-				mywin.w = 16 * 7;
-				mywin.h = 200;
-				mywin.px = mywin.x + 0;
-				mywin.py = mywin.y + 10;
-				s =		"Gamer's Edge\n"
-						"\"Keen Dreams\"\n"
-						"Copyright 1991\n"
-						"Softdisk, Inc.\n"
-						"\n"
-						"Subscriptions\n"
-						"1-800-831-2694\n"
-						"\n"
-						"Commander Keen\n"
-						"Copyright 1990-91\n"
-						"Id Software, Inc.\n"
-						"\n"
-						"Press F1 for Help\n"
-						"SPACE to Start\n";
-				if (ShowText((2 * TILEGLOBAL) + (PIXGLOBAL * 2),&mywin,s))
-					break;
-
-				if (MoveTitleTo((5 * TILEGLOBAL) + (TILEGLOBAL / 2)))
-					break;
-				if (Wait(TickBase * 3))
-					break;
-
+				displayofs = 0;
 				VWB_Bar(0,0,320,200,FIRSTCOLOR);
 				US_DisplayHighScores(-1);
 
-				if (IN_UserInput(TickBase * 8,false))
+				if (IN_UserInput(TickBase * 6, false))
 					break;
 			}
 
+			bufferofs = bufsave;
+			displayofs = dissave;
+
+			VW_FixRefreshBuffer();
 			US_ControlPanel ();
 		}
 
 		if (!loadedgame)
 			NewGame();
+
+		FreeShape(&FileShape1);
+		FreeShape(&FileShape2);
+
 		GameLoop();
 	}
 }

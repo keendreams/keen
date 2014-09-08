@@ -481,7 +481,7 @@ void MM_GetPtr (memptr *baseptr,unsigned long size)
 		}
 	}
 
-	Quit ("MM_GetPtr: Out of memory!");
+	Quit ("Out of memory!  Please make sure you have enough free memory.");
 }
 
 //==========================================================================

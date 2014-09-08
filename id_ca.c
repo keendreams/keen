@@ -673,9 +673,10 @@ void CAL_SetupGrFile (void)
 // load ???dict.ext (huffman dictionary for graphics files)
 //
 
-	if ((handle = open(GREXT"DICT."EXTENSION,
+//	if ((handle = open(GREXT"DICT.",
+	if ((handle = open("KDREAMS.EGA",
 		 O_RDONLY | O_BINARY, S_IREAD)) == -1)
-		Quit ("Can't open "GREXT"DICT."EXTENSION"!");
+		Quit ("Can't open KDREAMS.EGA!");
 
 	read(handle, &grhuffman, sizeof(grhuffman));
 	close(handle);
@@ -699,9 +700,10 @@ void CAL_SetupGrFile (void)
 //
 // Open the graphics file, leaving it open until the game is finished
 //
-	grhandle = open(GREXT"GRAPH."EXTENSION, O_RDONLY | O_BINARY);
+//	grhandle = open(GREXT"GRAPH."EXTENSION, O_RDONLY | O_BINARY); NOLAN
+	grhandle = open("KDREAMS.EGA", O_RDONLY | O_BINARY);
 	if (grhandle == -1)
-		Quit ("Cannot open "GREXT"GRAPH."EXTENSION"!");
+		Quit ("Cannot open KDREAMS.EGA!");
 
 
 //
@@ -757,9 +759,10 @@ void CAL_SetupMapFile (void)
 // load maphead.ext (offsets and tileinfo for map file)
 //
 #ifndef MAPHEADERLINKED
-	if ((handle = open("MAPHEAD."EXTENSION,
+//	if ((handle = open("MAPHEAD."EXTENSION,
+	if ((handle = open("KDREAMS.MAP",
 		 O_RDONLY | O_BINARY, S_IREAD)) == -1)
-		Quit ("Can't open MAPHEAD."EXTENSION"!");
+		Quit ("Can't open KDREAMS.MAP!");
 	length = filelength(handle);
 	MM_GetPtr (&(memptr)tinf,length);
 	CA_FarRead(handle, tinf, length);
@@ -776,9 +779,9 @@ void CAL_SetupMapFile (void)
 // open the data file
 //
 #ifdef MAPHEADERLINKED
-	if ((maphandle = open("GAMEMAPS."EXTENSION,
+	if ((maphandle = open("KDREAMS.MAP",
 		 O_RDONLY | O_BINARY, S_IREAD)) == -1)
-		Quit ("Can't open GAMEMAPS."EXTENSION"!");
+		Quit ("Can't open KDREAMS.MAP!");
 #else
 	if ((maphandle = open("MAPTEMP."EXTENSION,
 		 O_RDONLY | O_BINARY, S_IREAD)) == -1)
@@ -828,9 +831,10 @@ void CAL_SetupAudioFile (void)
 		 O_RDONLY | O_BINARY, S_IREAD)) == -1)
 		Quit ("Can't open AUDIOT."EXTENSION"!");
 #else
-	if ((audiohandle = open("AUDIO."EXTENSION,
+//	if ((audiohandle = open("AUDIO."EXTENSION,	NOLAN
+	if ((audiohandle = open("KDREAMS.AUD",
 		 O_RDONLY | O_BINARY, S_IREAD)) == -1)
-		Quit ("Can't open AUDIO."EXTENSION"!");
+		Quit ("Can't open KDREAMS.AUD!");
 #endif
 }
 
@@ -1580,7 +1584,7 @@ void CA_DownLevel (void)
 		Quit ("CA_DownLevel: Down past level 0!");
 	ca_levelbit>>=1;
 	ca_levelnum--;
-	CA_CacheMarks(titleptr[ca_levelnum]);
+	CA_CacheMarks(titleptr[ca_levelnum], 1);
 }
 
 //===========================================================================
@@ -1639,7 +1643,7 @@ void CA_ClearAllMarks (void)
 #define BARSTEP	8
 #define MAXEMPTYREAD	1024
 
-void CA_CacheMarks (char *title)
+void CA_CacheMarks (char *title, boolean cachedownlevel)
 {
 	boolean dialog;
 	int 	i,next,homex,homey,x,y,thx,thy,numcache,lastx,xl,xh;
@@ -1655,6 +1659,10 @@ void CA_CacheMarks (char *title)
 	titleptr[ca_levelnum] = title;
 
 	dialog = (title!=NULL);
+
+	if (cachedownlevel)
+		dialog = false;
+
 	if (dialog)
 	{
 	//

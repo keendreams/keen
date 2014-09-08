@@ -275,7 +275,7 @@ USL_ReadConfig(void)
 	SMMode		sm;
 	ControlType	ctl;
 
-	if ((file = open("CONFIG."EXTENSION,O_BINARY | O_RDONLY)) != -1)
+	if ((file = open("KDREAMS.CFG",O_BINARY | O_RDONLY)) != -1)
 	{
 		read(file,Scores,sizeof(HighScore) * MaxScores);
 		read(file,&sd,sizeof(sd));
@@ -312,7 +312,7 @@ USL_WriteConfig(void)
 {
 	int	file;
 
-	file = open("CONFIG."EXTENSION,O_CREAT | O_BINARY | O_WRONLY,
+	file = open("KDREAMS.CFG", O_CREAT | O_BINARY | O_WRONLY,
 				S_IREAD | S_IWRITE | S_IFREG);
 	if (file != -1)
 	{
@@ -571,6 +571,8 @@ USL_ShowMem(word x,word y,long mem)
 	USL_ScreenDraw(x,y,buf,0x48);
 }
 
+
+#if 0
 ///////////////////////////////////////////////////////////////////////////
 //
 //	US_UpdateTextScreen() - Called after the ID libraries are started up.
@@ -627,6 +629,8 @@ US_UpdateTextScreen(void)
 	USL_ScreenDraw(27,22,"  Loading...   ",0x9c);
 }
 
+#endif
+
 ///////////////////////////////////////////////////////////////////////////
 //
 //	US_FinishTextScreen() - After the main program has finished its initial
@@ -637,7 +641,7 @@ void
 US_FinishTextScreen(void)
 {
 	// Change Loading... to Press a Key
-	USL_ScreenDraw(29,22," Ready - Press a Key     ",0x9a);
+	USL_ScreenDraw(30, 18, "Ready - Press a Key",0xCE);
 
 	if (!tedlevel)
 	{
@@ -2582,10 +2586,10 @@ extern	char	far gametext,far context,far story;
 			break;
 		}
 
-		MM_GetPtr(&dupe,5000);
-		_fmemcpy((char far *)dupe,buf,5000);
+		MM_GetPtr(&dupe,5600);
+		_fmemcpy((char far *)dupe,buf,5600);
 
-		USL_DoHelp(dupe,5000);
+		USL_DoHelp(dupe,5600);
 
 		MM_FreePtr(&dupe);
 		if (LineOffsets)
@@ -3309,14 +3313,14 @@ USL_TearDownCtlPanel(void)
 
 		if (!QuitToDos)
 		{
-			US_CenterWindow(20,8);
-			US_CPrint("Loading");
+//			US_CenterWindow(20,8);		//NOLAN
+//			US_CPrint("Loading");
 #if 0
 			fontcolor = F_SECONDCOLOR;
 			US_CPrint("Sounds");
 			fontcolor = F_BLACK;
 #endif
-			VW_UpdateScreen();
+//			VW_UpdateScreen();
 
 			CA_LoadAllSounds();
 		}
@@ -3353,7 +3357,7 @@ US_ControlPanel(void)
 		CA_MarkGrChunk(i);
 	CA_MarkGrChunk(CTL_LITTLEMASKPICM);
 	CA_MarkGrChunk(CTL_LSMASKPICM);
-	CA_CacheMarks("Options Screen");
+	CA_CacheMarks("Options Screen", 0);
 
 	USL_SetUpCtlPanel();
 

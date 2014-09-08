@@ -20,6 +20,8 @@
 
 #include "ID_HEADS.H"
 #include <BIOS.H>
+#include "SOFT.H"
+#include "SL_FILE.H"
 
 #define FRILLS	0			// Cut out frills for 360K - MIKE MAYNARD
 
@@ -129,6 +131,35 @@ typedef struct	objstruct
 
 	struct	objstruct	*next,*prev;
 } objtype;
+
+
+struct BitMapHeader {
+	unsigned int	w,h,x,y;
+	unsigned char	d,trans,comp,pad;
+};
+
+struct BitMap {
+	unsigned int Width;
+	unsigned int Height;
+	unsigned int Depth;
+	unsigned int BytesPerRow;
+	char far *Planes[8];
+};
+
+struct Shape {
+	memptr Data;
+	long size;
+	unsigned int BPR;
+	struct BitMapHeader bmHdr;
+};
+
+typedef struct {
+	int handle;			// handle of file
+	memptr buffer;		// pointer to buffer
+	word offset;		// offset into buffer
+	word status;		// read/write status
+} BufferedIO;
+
 
 
 /*
@@ -312,3 +343,22 @@ extern	statetype s_deathwait2;
 extern	statetype s_deathwait3;
 extern	statetype s_deathboom1;
 extern	statetype s_deathboom2;
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//						GELIB.C DEFINITIONS
+//
+/////////////////////////////////////////////////////////////////////////////
+
+void FreeShape(struct Shape *shape);
+int UnpackEGAShapeToScreen(struct Shape *SHP,int startx,int starty);
+
+long Verify(char *filename);
+memptr InitBufferedIO(int handle, BufferedIO *bio);
+void FreeBufferedIO(BufferedIO *bio);
+byte bio_readch(BufferedIO *bio);
+void bio_fillbuffer(BufferedIO *bio);
+void SwapLong(long far *Var);
+void SwapWord(unsigned int far *Var);
+void MoveGfxDst(short x, short y);
