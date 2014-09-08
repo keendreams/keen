@@ -1,0 +1,74 @@
+HELP: CONTROL PANEL
+
+You are now in the Control Panel. The Control Panel is here to help you use Commander Keen the way you want to‹but first, you need to know how to look at this Help article.
+
+To read more of this text, you will have to press the down arrow key. If you scroll the text too far, you can press the up arrow key to scroll back up. The Page Up and Page Dn keys work as well. Also, if you have a mouse or joystick connected, they can be used to scroll the text. When you are done reading the text, press Esc. All three Help topics work this way.  You can get more help on the controls of the game, and you can read the story of "Keen Dreams."
+
+
+CONTROL PANEL SECTIONS
+
+There are six sections to choose in the Control Panel. They are: Game, Help, Disk, Controls, Sound Effects, and Music. You can choose these sections by selecting the buttons on the left side of the screen. With the keyboard, use the arrows to move the ship cursor to the button you want, then press ENTER. The joystick or mouse can also move the ship cursor, and pushing the button  will select the item the ship is on.
+
+GAME SECTION
+You can choose to start a new game in easy, normal, or hard modes. These determine how long your Flower Powers last.
+
+If you are in the middle of a game and haven't saved it, starting a new game will wipe out that old game forever. 
+
+You can also choose to resume a game if you went to the Control Panel in the middle of play.
+
+HELP SECTION
+This is where you are now.  This topic is "Help me, I'm lost!"  The others are about the game controls, and the story of "Keen Dreams."
+
+DISK SECTION
+You can save your current game or load a previously saved game here. You can name your saved game so you'll remember where you saved it.  Loading a game will replace your current game (make sure you saved it). Saving over an old game will replace that game forever.
+
+You can also "Exit to DOS," which will quit the game.
+
+CONTROLS SECTION
+You can control the game by keyboard or joystick.  If you choose keyboard, you can redefine which keys you wish to use to control Keen.  In the Control Panel, you will always use the arrow keys and ENTER.
+
+SOUND EFFECTS SECTION
+If you have an AdLib, Sound Blaster, or Sound Source, you can choose to have the sound effects play on them. ("Keen Dreams" was too full of neat stuff and cool graphics to include digitized sound effects for the Sound Source and Sound Blaster, however.) If you don't have any of these boards, you'll have to choose "No Sound Effects" or "PC Speaker."
+
+MUSIC SECTION
+Future games using this interface will include music.  If you have an AdLib or SoundBlaster, you can choose to have background music playing. Otherwise, no music.  We tried to make everything fit for Keen Dreams, but we had to opt for more levels and less frills, like music.  (We tried, believe me!)
+
+HOT KEYS: CONTROL PANEL SHORTCUTS
+
+Some of the function keys provide quick shortcuts to parts of the control panel.  Here's a quick list of them.
+
+F1: Help
+F2: Sounds
+F3: Keyboard
+F4: Joystick
+F5: Restart Game
+F6: Load/Save Game
+F7: Music
+Esc: Quit (or return to game, from Control Panel)
+
+
+NOTE TO SUPER VGA OWNERS
+
+If you own a Speedstar VGA card or other non-100% compatible SVGA card, you'll need to type "KDREAMS /COMP" on the command line, instead of just "KDREAMS." This should fix all your problems.
+
+
+OTHER NEAT-O COMMAND LINE PARAMETERS
+
+When some documentation tells you to type more that just the name of the program you want to run (like we did above), those extra bits are called "command line parameters."  This is a fancy term for extra information you can give the program when you run it. Normally, you will never have to type these.  If the program is having trouble with your hardware, try the appropriate parameter. Here are some command line parameters that work with Commander Keen:
+
+  KDREAMS /NODR  (Type this if the program hangs a lot with the drive still on.)
+  KDREAMS /NOAL  (No AdLib or Sound Blaster detection.)
+  KDREAMS /NOSB  (No Sound Blaster detection.)
+  KDREAMS /NOSS  (No Sound Source detection.)
+  KDREAMS /SST  (Put Sound Source in Tandy mode for Tandy computers with the special Sound Source adapter.)
+  KDREAMS /SS1 (Set Sound Source to LPT1.  /SS2 will set it to LPT2, and /SS3, LPT3.)
+
+  KDREAMS /NOJOYS  (Tell program to ignore joystick.)
+  KDREAMS /NOMOUSE  (Tell program to ignore mouse.)
+
+  KDREAMS /HIDDENCARD  (Overrides video card detection if the program seems to be detecting your video card incorrectly and not letting you play.)
+
+CONCLUSION
+
+Now go explore the Control Panel, and have fun playing Keen Dreams!
+~
