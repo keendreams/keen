@@ -2,54 +2,48 @@
 GAME CONTROLS
 * * * * * * *
 
-Here's a quick summary chart of the controls you can use.  You can change some of the keyboard controls by pressing [F3] during play or while in the Control Panel.
+Here's a quick summary chart of the controls you can use.  You can change some of the keyboard controls by pressing [F3] during play or in the Control Panel.
 
 MOVE KEEN AROUND:
-Use the arrow keys (including those on the numeric keypad).
+Use the arrow keys or joystick.
 
 ENTER A NEW AREA:
-Press the [CTRL] key when Keen is on top of a new area in the big map.
+Press the [CTRL] key or joystick Button 1 when Keen is on top of a new area in the big map.
 
 JUMP UP:
-To make Keen jump, press the [CTRL] key.
+To make Keen jump, press the [CTRL] key or joystick Button 1.
 
 CLIMB A POLE:
-To shinny up or slide down a pole, stand in front of the pole or jump up to it and use the up or down arrow keys to climb.
+To shinny up or slide down a pole, stand in front of the pole or jump up to it and use the up or down arrow keys or the joystick to climb.
 
 THROW:
-To throw a Flower Power or Boobus Bomb, press the [ALT] key.
+To throw a Flower Power or Boobus Bomb, press the [ALT] key or joystick Button 2.
 
 JUMP DOWN:
-If you are on a log, beam or other platform, you can jump down from it by pressing the down-arrow plus [CTRL] keys.
+If you are on a log, beam or other platform, you can jump down from it by pressing the down-arrow plus [CTRL] keys or joystick Button 1 and the joystick down-position.
 
-DUCK: 
-If you aren't on a pole, pressing down will make Keen duck. You can't duck in front of a pole---you'll climb down it!
+DUCK:
+If you aren't on a pole, pressing down will make Keen duck.  You can't duck in front of a pole---you'll climb down it!
 
-* * * * * * * * *
-FUNCTION CONTROLS
-* * * * * * * * *
+* * * * * * *
+FUNCTION KEYS
+* * * * * * *
 
-F1
-   Get Help
+F1 - Get Help
 
-F2
-   Turn Sound on/off
+F2 - Turn Sound On/Off
 
-F3
-   Configure keyboard controls
+F3 - Configure keyboard and joystick controls
 
-F4
-   Restart game
+F4 - Restart Game
 
-F5
-   New game
+F5 - New Game
 
-F6
-   Save or Load game
+F6 - Save or Load game
 
-ESC
-   Exit current mode
+ESC- Exit current game
+
+*** END OF THIS HELP SECTION ***
 
 
 ~
-

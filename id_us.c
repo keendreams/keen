@@ -2173,6 +2173,7 @@ USL_CtlCKbdButtonCustom(UserCall call,word i,word n)
 static boolean
 USL_CtlCJoyButtonCustom(UserCall call,word i,word n)
 {
+	boolean Done = false;
 	word	joy,
 			minx,maxx,
 			miny,maxy;
@@ -2189,25 +2190,38 @@ USL_CtlCJoyButtonCustom(UserCall call,word i,word n)
 	FlushHelp = true;
 	fontcolor = F_SECONDCOLOR;
 
-	USL_ShowHelp("Move Joystick to the Upper-Left");
-	VW_UpdateScreen();
-	while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy))
-		;
-	if (LastScan != sc_Escape)
+	while (!(Done))
 	{
-		IN_GetJoyAbs(joy,&minx,&miny);
-		while (IN_GetJoyButtonsDB(joy))
-			;
-
-		USL_ShowHelp("Move Joystick to the Lower-Right");
+		USL_ShowHelp("Move Joystick to the Upper-Left");
 		VW_UpdateScreen();
-		while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy))
-			;
+		while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy));
+
 		if (LastScan != sc_Escape)
 		{
-			IN_GetJoyAbs(0,&maxx,&maxy);
-			IN_SetupJoy(joy,minx,maxx,miny,maxy);
+			IN_GetJoyAbs(joy,&minx,&miny);
+			while (IN_GetJoyButtonsDB(joy));
+
+			USL_ShowHelp("Move Joystick to the Lower-Right");
+			VW_UpdateScreen();
+			while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy));
+
+			if (LastScan != sc_Escape)
+			{
+				IN_GetJoyAbs(0,&maxx,&maxy);
+
+				if ((maxx != minx) && (maxy != miny))
+				{
+					Done = true;
+					IN_SetupJoy(joy,minx,maxx,miny,maxy);
+				}
+				else
+					while (IN_GetJoyButtonsDB(joy));
+			}
+			else
+				Done = true;
 		}
+		else
+			Done = true;
 	}
 
 	if (LastScan != sc_Escape)

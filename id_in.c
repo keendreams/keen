@@ -557,16 +557,18 @@ IN_SetupJoy(word joy,word minx,word maxx,word miny,word maxy)
 static boolean
 INL_StartJoy(word joy)
 {
-	boolean		result;
-	word		x,y,d;
-	JoystickDef	*def;
+	word x,y;
 
-	IN_GetJoyAbs(joy,&x,&y);
+	IN_GetJoyAbs(joy, &x, &y);
 
-	result = (x < MaxJoyValue - 10);
-	if (result)
-		IN_SetupJoy(joy,0,x * 2,0,y * 2);
-	return(result);
+	if (((x == 0) || (x > MaxJoyValue - 10)) ||
+		 ((y == 0) || (y > MaxJoyValue - 10)))
+		return(false);
+	else
+	{
+		IN_SetupJoy(joy, 0, x*2, 0, y*2);
+		return(true);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////
