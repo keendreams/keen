@@ -492,6 +492,7 @@ DemoLoop (void)
 				MoveGfxDst(0, 200);
 				UnpackEGAShapeToScreen(&FileShape1, 0, 0);
 				VW_ScreenToScreen (64*200,0,40,200);
+
 #if CREDITS
 				if (IN_UserInput(TickBase * 8, false))
 					break;
@@ -522,6 +523,7 @@ DemoLoop (void)
 
 				if (IN_UserInput(TickBase * 6, false))
 					break;
+
 			}
 
 			bufferofs = bufsave;

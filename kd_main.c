@@ -377,8 +377,8 @@ void Quit (char *error)
 	clrscr();
 	puts(error);
 	puts("\n");
-	puts("For techinical assistance with running this software, type HELP at");
-	puts("    the DOS prompt or call Gamer's Edge at 1-318-221-8311");
+//	puts("For techinical assistance with running this software, type HELP at");
+//	puts("    the DOS prompt or call Gamer's Edge at 1-318-221-8311");
 	exit(1);
   }
 
@@ -503,6 +503,14 @@ void main (void)
 {
 	boolean LaunchedFromShell = false;
 	short i;
+
+	if (stricmp(_argv[1], "/VER") == 0)
+	{
+		printf("KEEN DREAMS\n");
+		printf("Copyright 1991-92 Softdisk Publishing\n");
+		printf("Version 1.91   QA [0]\n");
+		exit(0);
+	}
 
 	for (i = 1;i < _argc;i++)
 	{

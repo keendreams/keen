@@ -493,6 +493,7 @@ USL_ClearTextScreen(void)
 	_DH = 24;				// Bottom row
 	_AH = 0x02;
 	geninterrupt(0x10);
+
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -2190,6 +2191,7 @@ USL_CtlCJoyButtonCustom(UserCall call,word i,word n)
 	FlushHelp = true;
 	fontcolor = F_SECONDCOLOR;
 
+
 	while (!(Done))
 	{
 		USL_ShowHelp("Move Joystick to the Upper-Left");
@@ -2223,6 +2225,7 @@ USL_CtlCJoyButtonCustom(UserCall call,word i,word n)
 		else
 			Done = true;
 	}
+
 
 	if (LastScan != sc_Escape)
 		while (IN_GetJoyButtonsDB(joy))
