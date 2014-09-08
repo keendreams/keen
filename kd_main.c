@@ -426,6 +426,7 @@ void InitGame (void)
 	{
 #pragma	warn	-pro
 #pragma	warn	-nod
+		textbackground(0);
 		clrscr();			// we can't include CONIO because of a name conflict
 #pragma	warn	+nod
 #pragma	warn	+pro
