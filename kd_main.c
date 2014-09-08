@@ -521,6 +521,9 @@ void main (void)
 		exit(0);
 	}
 
+	textcolor(7);
+	textbackground(0);
+
 	InitGame();
 
 	DemoLoop();					// DemoLoop calls Quit when everything is done

@@ -24,7 +24,7 @@
 #include "SL_FILE.H"
 
 #define FRILLS	0			// Cut out frills for 360K - MIKE MAYNARD
-
+#define CREDITS 0
 
 /*
 =============================================================================
