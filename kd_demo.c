@@ -432,9 +432,7 @@ DemoLoop (void)
 	word		move;
 	longword	lasttime;
 	char *FileName1;
-	char *FileName2;
 	struct Shape FileShape1;
-	struct Shape FileShape2;
 	struct ffblk ffblk;
 	WindowRec	mywin;
 	int bufsave	= bufferofs;
@@ -471,9 +469,6 @@ DemoLoop (void)
 		FileName1 = "TITLESCR.LBM";
 		if (LoadLIBShape("KDREAMS.CMP", FileName1, &FileShape1))
 			Quit("Can't load TITLE SCREEN");
-		FileName2 = "CREDITS.LBM";
-		if (LoadLIBShape("KDREAMS.CMP", FileName2, &FileShape2))
-			Quit("Can't load CREDITS SCREEN");
 
 
 		while (!restartgame && !loadedgame)
@@ -490,14 +485,14 @@ DemoLoop (void)
 				UnpackEGAShapeToScreen(&FileShape1, 0, 0);
 				VW_ScreenToScreen (64*200,0,40,200);
 
-				if (IN_UserInput(TickBase * 8, false))
+				if (IN_UserInput(TickBase * 4, false))
 					break;
 
 				MoveGfxDst(0, 200);
-				UnpackEGAShapeToScreen(&FileShape2, 0, 0);
+				UnpackEGAShapeToScreen(&FileShape1, 0, 0);
 				VW_ScreenToScreen (64*200,0,40,200);
 
-				if (IN_UserInput(TickBase * 7, false))
+				if (IN_UserInput(TickBase * 3, false))
 					break;
 
 				displayofs = 0;
@@ -519,7 +514,6 @@ DemoLoop (void)
 			NewGame();
 
 		FreeShape(&FileShape1);
-		FreeShape(&FileShape2);
 
 		GameLoop();
 	}
