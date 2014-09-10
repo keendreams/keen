@@ -33,6 +33,8 @@
 #include "KD_DEF.H"
 #pragma hdrstop
 
+#define CATALOG
+
 /*
 =============================================================================
 
@@ -49,9 +51,9 @@
 =============================================================================
 */
 
-char		str[80],str2[20];
-boolean		singlestep,jumpcheat,godmode,tedlevel;
-unsigned	tedlevelnum;
+char            str[80],str2[20];
+boolean         singlestep,jumpcheat,godmode,tedlevel;
+unsigned        tedlevelnum;
 
 /*
 =============================================================================
@@ -61,13 +63,13 @@ unsigned	tedlevelnum;
 =============================================================================
 */
 
-void	DebugMemory (void);
-void	TestSprites(void);
-int		DebugKeys (void);
-void	ShutdownId (void);
-void	Quit (char *error);
-void	InitGame (void);
-void	main (void);
+void    DebugMemory (void);
+void    TestSprites(void);
+int             DebugKeys (void);
+void    ShutdownId (void);
+void    Quit (char *error);
+void    InitGame (void);
+void    main (void);
 
 //===========================================================================
 
@@ -110,14 +112,14 @@ void DebugMemory (void)
 ===================
 */
 
-#define DISPWIDTH	110
-#define	TEXTWIDTH   40
+#define DISPWIDTH       110
+#define TEXTWIDTH   40
 void TestSprites(void)
 {
 	int hx,hy,sprite,oldsprite,bottomy,topx,shift;
 	spritetabletype far *spr;
-	spritetype _seg	*block;
-	unsigned	mem,scan;
+	spritetype _seg *block;
+	unsigned        mem,scan;
 
 
 	VW_FixRefreshBuffer ();
@@ -169,7 +171,7 @@ void TestSprites(void)
 		else
 		{
 			mem = block->sourceoffset[3]+5*block->planesize[3];
-			mem = (mem+15)&(~15);		// round to paragraphs
+			mem = (mem+15)&(~15);           // round to paragraphs
 			US_PrintUnsigned (mem);
 		}
 
@@ -237,7 +239,7 @@ int DebugKeys (void)
 	int level;
 
 #if FRILLS
-	if (Keyboard[0x12] && ingame)	// DEBUG: end + 'E' to quit level
+	if (Keyboard[0x12] && ingame)   // DEBUG: end + 'E' to quit level
 	{
 		if (tedlevel)
 			TEDDeath();
@@ -245,7 +247,7 @@ int DebugKeys (void)
 	}
 #endif
 
-	if (Keyboard[0x22] && ingame)		// G = god mode
+	if (Keyboard[0x22] && ingame)           // G = god mode
 	{
 		VW_FixRefreshBuffer ();
 		US_CenterWindow (12,2);
@@ -258,7 +260,7 @@ int DebugKeys (void)
 		godmode ^= 1;
 		return 1;
 	}
-	else if (Keyboard[0x17])			// I = item cheat
+	else if (Keyboard[0x17])                        // I = item cheat
 	{
 		VW_FixRefreshBuffer ();
 		US_CenterWindow (12,3);
@@ -270,7 +272,7 @@ int DebugKeys (void)
 		IN_Ack ();
 		return 1;
 	}
-	else if (Keyboard[0x24])			// J = jump cheat
+	else if (Keyboard[0x24])                        // J = jump cheat
 	{
 		jumpcheat^=1;
 		VW_FixRefreshBuffer ();
@@ -284,17 +286,17 @@ int DebugKeys (void)
 		return 1;
 	}
 #if FRILLS
-	else if (Keyboard[0x32])			// M = memory info
+	else if (Keyboard[0x32])                        // M = memory info
 	{
 		DebugMemory();
 		return 1;
 	}
 #endif
-	else if (Keyboard[0x19])			// P = pause with no screen disruptioon
+	else if (Keyboard[0x19])                        // P = pause with no screen disruptioon
 	{
 		IN_Ack();
 	}
-	else if (Keyboard[0x1f] && ingame)	// S = slow motion
+	else if (Keyboard[0x1f] && ingame)      // S = slow motion
 	{
 		singlestep^=1;
 		VW_FixRefreshBuffer ();
@@ -308,13 +310,13 @@ int DebugKeys (void)
 		return 1;
 	}
 #if FRILLS
-	else if (Keyboard[0x14])			// T = sprite test
+	else if (Keyboard[0x14])                        // T = sprite test
 	{
 		TestSprites();
 		return 1;
 	}
 #endif
-	else if (Keyboard[0x11] && ingame)	// W = warp to level
+	else if (Keyboard[0x11] && ingame)      // W = warp to level
 	{
 		VW_FixRefreshBuffer ();
 		US_CenterWindow(26,3);
@@ -377,17 +379,23 @@ void Quit (char *error)
 	clrscr();
 	puts(error);
 	puts("\n");
-//	puts("For techinical assistance with running this software, type HELP at");
-//	puts("    the DOS prompt or call Gamer's Edge at 1-318-221-8311");
+//      puts("For techinical assistance with running this software, type HELP at");
+//      puts("    the DOS prompt or call Softdisk Publishing at 1-318-221-8311");
 	exit(1);
   }
-
+#ifndef CATALOG
 	_argc = 2;
 	_argv[1] = "LAST.SHL";
 	_argv[2] = "ENDSCN.SCN";
 	_argv[3] = NULL;
 	if (execv("LOADSCN.EXE", _argv) == -1)
 		Quit("Couldn't find executable LOADSCN.EXE.\n");
+#endif
+#ifdef CATALOG
+  VW_SetScreenMode(TEXTGR);
+  exit(0);
+#endif
+
 }
 
 //===========================================================================
@@ -420,13 +428,13 @@ void InitGame (void)
 #if GRMODE == EGAGR
 	if (mminfo.mainmem < 335l*1024)
 	{
-#pragma	warn	-pro
-#pragma	warn	-nod
+#pragma warn    -pro
+#pragma warn    -nod
 		textcolor(7);
 		textbackground(0);
-		clrscr();			// we can't include CONIO because of a name conflict
-#pragma	warn	+nod
-#pragma	warn	+pro
+		clrscr();                       // we can't include CONIO because of a name conflict
+#pragma warn    +nod
+#pragma warn    +pro
 		puts ("There is not enough memory available to play the game reliably.  You can");
 		puts ("play anyway, but an out of memory condition will eventually pop up.  The");
 		puts ("correct solution is to unload some TSRs or rename your CONFIG.SYS and");
@@ -495,7 +503,7 @@ void InitGame (void)
 ==========================
 */
 
-static	char			*EntryParmStrings[] = {"detour",nil};
+static  char                    *EntryParmStrings[] = {"detour",nil};
 
 void main (void)
 {
@@ -509,8 +517,26 @@ void main (void)
 	{
 		printf("KEEN DREAMS\n");
 		printf("CGA Version\n");
-		printf("Copyright 1991-92 Softdisk Publishing\n");
-		printf("Version 1.04  QA[1]\n");
+		printf("Copyright 1991-93 Softdisk Publishing\n");
+		printf("Version 1.05 (rev 1)\n");
+		exit(0);
+	}
+
+	if (stricmp(_argv[1], "/?") == 0)
+	{
+		printf("\nKeen Dreams CGA version 1.05\n");
+		printf("Copyright 1991-1993 Softdisk Publishing.\n\n");
+		printf("Commander Keen is a trademark of Id Software.\n");
+		printf("Type KDREAMS from the DOS prompt to run.\n\n");
+		printf("KDREAMS /COMP for SVGA compatibility mode\n");
+		printf("KDREAMS /NODR stops program hang with the drive still on\n");
+		printf("KDREAMS /NOAL disables AdLib and Sound Blaster detection\n");
+		printf("KDREAMS /NOSB disables Sound Blaster detection\n");
+		printf("KDREAMS /NOJOYS ignores joystick\n");
+		printf("KDREAMS /NOMOUSE ignores mouse\n");
+		printf("KDREAMS /HIDDENCARD overrides video card detection\n");
+		printf("KDREAMS /VER  for version and compatibility information\n");
+		printf("KDREAMS /? for this help information\n");
 		exit(0);
 	}
 
@@ -523,17 +549,18 @@ void main (void)
 			break;
 		}
 	}
-
+#ifndef CATALOG
 	if (!LaunchedFromShell)
 	{
 		clrscr();
 		puts("You must type START at the DOS prompt to run KEEN DREAMS.");
 		exit(0);
 	}
+#endif
 
 	InitGame();
 
-	DemoLoop();					// DemoLoop calls Quit when everything is done
+	DemoLoop();                                     // DemoLoop calls Quit when everything is done
 	Quit("Demo loop exited???");
 }
 

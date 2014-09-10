@@ -20,9 +20,9 @@
 
 #include "KD_DEF.H"
 
-#pragma	hdrstop
+#pragma hdrstop
 
-#define RLETAG	0xABCD
+#define RLETAG  0xABCD
 
 /*
 =============================================================================
@@ -63,9 +63,9 @@
 
 void NewGame (void)
 {
-	word	i;
+	word    i;
 
-	gamestate.worldx = 0;		// spawn keen at starting spot
+	gamestate.worldx = 0;           // spawn keen at starting spot
 
 	gamestate.mapon = 0;
 	gamestate.score = 0;
@@ -90,7 +90,7 @@ int WaitOrKey (int vbls)
 {
 	while (vbls--)
 	{
-		IN_ReadControl(0,&c);		// get player input
+		IN_ReadControl(0,&c);           // get player input
 		if (LastScan || c.button0 || c.button1)
 		{
 			IN_ClearKeysDown ();
@@ -138,7 +138,7 @@ GameOver (void)
 
 void StatusWindow (void)
 {
-	word	x;
+	word    x;
 
 	// DEBUG - make this look better
 
@@ -197,9 +197,9 @@ void StatusWindow (void)
 boolean
 SaveGame(int file)
 {
-	word	i,size,compressed,expanded;
-	objtype	*o;
-	memptr	bigbuffer;
+	word    i,size,compressed,expanded;
+	objtype *o;
+	memptr  bigbuffer;
 
 	if (!CA_FarWrite(file,(void far *)&gamestate,sizeof(gamestate)))
 		return(false);
@@ -207,7 +207,7 @@ SaveGame(int file)
 	expanded = mapwidth * mapheight * 2;
 	MM_GetPtr (&bigbuffer,expanded);
 
-	for (i = 0;i < 3;i++)	// Write all three planes of the map
+	for (i = 0;i < 3;i++)   // Write all three planes of the map
 	{
 //
 // leave a word at start of compressed data for compressed length
@@ -239,12 +239,12 @@ SaveGame(int file)
 boolean
 LoadGame(int file)
 {
-	word	i,j,size;
-	objtype	*o;
+	word    i,j,size;
+	objtype *o;
 	int orgx,orgy;
-	objtype		*prev,*next,*followed;
-	unsigned	compressed,expanded;
-	memptr	bigbuffer;
+	objtype         *prev,*next,*followed;
+	unsigned        compressed,expanded;
+	memptr  bigbuffer;
 
 	if (!CA_FarRead(file,(void far *)&gamestate,sizeof(gamestate)))
 		return(false);
@@ -255,7 +255,7 @@ LoadGame(int file)
 	ca_levelbit >>= 1;
 	ca_levelnum--;
 
-	SetupGameLevel (false);		// load in and cache the base old level
+	SetupGameLevel (false);         // load in and cache the base old level
 	titleptr[ca_levelnum] = levelnames[mapon];
 
 	ca_levelbit <<= 1;
@@ -264,7 +264,7 @@ LoadGame(int file)
 	expanded = mapwidth * mapheight * 2;
 	MM_GetPtr (&bigbuffer,expanded);
 
-	for (i = 0;i < 3;i++)	// Read all three planes of the map
+	for (i = 0;i < 3;i++)   // Read all three planes of the map
 	{
 		if (!CA_FarRead(file,(void far *)&compressed,sizeof(compressed)) )
 		{
@@ -315,9 +315,9 @@ LoadGame(int file)
 			break;
 	}
 
-	*((long *)&(scoreobj->temp1)) = -1;		// force score to be updated
-	scoreobj->temp3 = -1;			// and flower power
-	scoreobj->temp4 = -1;			// and lives
+	*((long *)&(scoreobj->temp1)) = -1;             // force score to be updated
+	scoreobj->temp3 = -1;                   // and flower power
+	scoreobj->temp4 = -1;                   // and lives
 
 	return(true);
 }
@@ -329,7 +329,7 @@ ResetGame(void)
 
 	ca_levelnum--;
 	CA_ClearMarks();
-	titleptr[ca_levelnum] = NULL;		// don't reload old level
+	titleptr[ca_levelnum] = NULL;           // don't reload old level
 	ca_levelnum++;
 }
 
@@ -345,11 +345,11 @@ TEDDeath(void)
 static boolean
 MoveTitleTo(int offset)
 {
-	boolean		done;
-	int			dir,
+	boolean         done;
+	int                     dir,
 				chunk,
 				move;
-	longword	lasttime,delay;
+	longword        lasttime,delay;
 
 	if (offset < originxglobal)
 		dir = -1;
@@ -427,10 +427,10 @@ ShowText(int offset,WindowRec *wr,char *s)
 void
 DemoLoop (void)
 {
-	char		*s;
-	word		move;
-	longword	lasttime;
-	WindowRec	mywin;
+	char            *s;
+	word            move;
+	longword        lasttime;
+	WindowRec       mywin;
 
 #if FRILLS
 //
@@ -453,7 +453,7 @@ DemoLoop (void)
 	while (true)
 	{
 		// Load the Title map
-		gamestate.mapon = 20;		// title map number
+		gamestate.mapon = 20;           // title map number
 		loadedgame = false;
 		SetupGameLevel(true);
 
@@ -481,7 +481,7 @@ DemoLoop (void)
 				mywin.h = 200;
 				mywin.px = mywin.x + 0;
 				mywin.py = mywin.y + 10;
-				s =		"Game\n"
+				s =             "Game\n"
 						"John Carmack\n"
 						"\n"
 						"Utilities\n"
@@ -504,9 +504,9 @@ DemoLoop (void)
 				mywin.h = 200;
 				mywin.px = mywin.x + 0;
 				mywin.py = mywin.y + 10;
-				s =		"Gamer's Edge\n"
+				s =             "\n"
 						"\"Keen Dreams\"\n"
-						"Copyright 1991-92\n"
+						"Copyright 1991-93\n"
 						"Softdisk, Inc.\n"
 						"\n"
 						"\n"
