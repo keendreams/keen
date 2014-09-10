@@ -585,6 +585,7 @@ US_UpdateTextScreen(void)
 	word		i;
 	longword	totalmem;
 
+#if 0
 	// Show video card info
 	b = (grmode == CGAGR);
 	USL_Show(21,7,4,(videocard >= CGAcard) && (videocard <= VGAcard),b);
@@ -625,6 +626,7 @@ US_UpdateTextScreen(void)
 
 	// Change Initializing... to Loading...
 	USL_ScreenDraw(27,22,"  Loading...   ",0x9c);
+#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -637,7 +639,8 @@ void
 US_FinishTextScreen(void)
 {
 	// Change Loading... to Press a Key
-	USL_ScreenDraw(29,22," Ready - Press a Key     ",0x9a);
+//	USL_ScreenDraw(29,22," Ready - Press a Key     ",0x9a);
+	USL_ScreenDraw(30, 18, "Ready - Press a Key",0xCE);
 
 	if (!tedlevel)
 	{
@@ -2169,6 +2172,7 @@ USL_CtlCKbdButtonCustom(UserCall call,word i,word n)
 static boolean
 USL_CtlCJoyButtonCustom(UserCall call,word i,word n)
 {
+	boolean Done = false;
 	word	joy,
 			minx,maxx,
 			miny,maxy;
@@ -2185,30 +2189,42 @@ USL_CtlCJoyButtonCustom(UserCall call,word i,word n)
 	FlushHelp = true;
 	fontcolor = F_SECONDCOLOR;
 
-	USL_ShowHelp("Move Joystick to the Upper-Left");
-	VW_UpdateScreen();
-	while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy))
-		;
-	if (LastScan != sc_Escape)
+	while (!(Done))
 	{
-		IN_GetJoyAbs(joy,&minx,&miny);
-		while (IN_GetJoyButtonsDB(joy))
-			;
-
-		USL_ShowHelp("Move Joystick to the Lower-Right");
+		USL_ShowHelp("Move Joystick to the Upper-Left");
 		VW_UpdateScreen();
-		while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy))
-			;
+		while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy));
+
 		if (LastScan != sc_Escape)
 		{
-			IN_GetJoyAbs(0,&maxx,&maxy);
-			IN_SetupJoy(joy,minx,maxx,miny,maxy);
+			IN_GetJoyAbs(joy,&minx,&miny);
+			while (IN_GetJoyButtonsDB(joy));
+
+			USL_ShowHelp("Move Joystick to the Lower-Right");
+			VW_UpdateScreen();
+			while ((LastScan != sc_Escape) && !IN_GetJoyButtonsDB(joy));
+
+			if (LastScan != sc_Escape)
+			{
+				IN_GetJoyAbs(0,&maxx,&maxy);
+
+				if ((maxx != minx) && (maxy != miny))
+				{
+					Done = true;
+					IN_SetupJoy(joy,minx,maxx,miny,maxy);
+				}
+				else
+					while (IN_GetJoyButtonsDB(joy));
+			}
+			else
+				Done = true;
 		}
+		else
+			Done = true;
 	}
 
 	if (LastScan != sc_Escape)
-		while (IN_GetJoyButtonsDB(joy))
-			;
+		while (IN_GetJoyButtonsDB(joy));
 
 	if (LastScan)
 		IN_ClearKeysDown();

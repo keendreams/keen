@@ -44,7 +44,7 @@
 #define	EGAGR	2
 #define	VGAGR	3
 
-#define GRMODE	EGAGR
+#define GRMODE	CGAGR
 
 #if GRMODE == EGAGR
 #define GREXT	"EGA"

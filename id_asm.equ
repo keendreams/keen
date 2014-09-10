@@ -6,7 +6,7 @@ CGAGR		=	1
 EGAGR		=	2
 VGAGR		=	3
 
-GRMODE		=	EGAGR
+GRMODE		=	CGAGR
 PROFILE		=	0			; 1=keep stats on tile drawing
 
 SC_INDEX	=	03C4h

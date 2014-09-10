@@ -81,14 +81,14 @@ char		*levelnames[21] =
 "Bridge Bottoms",
 "Rhubarb Rapids",
 "Parsnip Pass",
-"",
+"Cheat Level 1",
 "Spud City",
-"",
+"Cheat Level 2",
 "Apple Acres",
 "Grape Grove",
-"",
+"Cheat Level 3",
 "Brussels Sprout Bay",
-"",
+"Cheat Level 4",
 "Squash Swamp",
 "Boobus' Chamber",
 "Castle Tuberia",
@@ -1687,11 +1687,11 @@ struct date d;
 	US_CenterWindow (30,21);
 	PrintY += 9;
 	US_CPrint (
-"Billy woke up, squinting at the\n"
-"early morning sun shining in his\n"
-"face through the bedroom window.\n"
-"Nothing. No vegetables to be seen.\n"
-"Was it all just a dream?\n\n"
+"Billy woke up, looking around the\n"
+"room, the early morning sun\n"
+"shining in his face.  Nothing.\n"
+"No vegetables to be seen.  Was it\n"
+"all just a dream?\n\n"
 "Billy's mom entered the room.\n\n"
 "\"Good morning, dear. I heard some\n"
 "news on TV that you'd be\n"
@@ -1719,49 +1719,12 @@ struct date d;
 "\"But if it's okay with you, I'd\n"
 "rather not have any french fries\n"
 "for awhile.\"\n\n"
+"THE END"
 	);
 	VW_UpdateScreen();
 	VW_WaitVBL(60);
 	IN_ClearKeysDown ();
 	IN_Ack();
-
-/* screen 4 of finale (13 lines)*/
-	US_CenterWindow (30,21);
-	PrintY += 18;
-	US_CPrint (
-"\"Okay, honey,\" Billy's mom said.\n\n"
-"\"Uh, Mom, what are we having for\n"
-"supper tonight?\" Billy asked.\n\n"
-"\"Oh, we're having liver, dear.\"\n"
-"\"I HATE liver!  I don't have to\n"
-"eat liver.  I saved the earth!\"\n\n"
-"THE END\n\n"
-"(Possibly continued in...\n"
-"\"Commander Keen Meets the Meats\")\n"
-	);
-	VW_UpdateScreen();
-	VW_WaitVBL(60);
-	IN_ClearKeysDown ();
-	IN_Ack();
-
-	getdate(&d);
-	if (d.da_year > 1991 || d.da_mon > 7 || d.da_day > 29)
-	{
-/* screen 5 of finale (6 lines)*/
-	US_CenterWindow (30,21);
-	PrintY += 53;
-	US_CPrint (
-"Commander Keen will definitely\n"
-"return in...\n\n"
-"\"Goodbye, Galaxy!\"\n\n"
-"Watch for it!\n"
-	);
-	VW_UpdateScreen();
-	VW_WaitVBL(60);
-	IN_ClearKeysDown ();
-	IN_Ack();
-
-	}
 }
 
 //==========================================================================
