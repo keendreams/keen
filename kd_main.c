@@ -377,17 +377,9 @@ void Quit (char *error)
 	clrscr();
 	puts(error);
 	puts("\n");
-//	puts("For techinical assistance with running this software, type HELP at");
-//	puts("    the DOS prompt or call Gamer's Edge at 1-318-221-8311");
 	exit(1);
   }
-
-	_argc = 2;
-	_argv[1] = "LAST.SHL";
-	_argv[2] = "ENDSCN.SCN";
-	_argv[3] = NULL;
-	if (execv("LOADSCN.EXE", _argv) == -1)
-		Quit("Couldn't find executable LOADSCN.EXE.\n");
+	exit (0);
 }
 
 //===========================================================================
@@ -497,35 +489,15 @@ void InitGame (void)
 ==========================
 */
 
-static	char			*EntryParmStrings[] = {"detour",nil};
-
 void main (void)
 {
-	boolean LaunchedFromShell = false;
 	short i;
 
 	if (stricmp(_argv[1], "/VER") == 0)
 	{
 		printf("KEEN DREAMS\n");
-		printf("Copyright 1991-92 Softdisk Publishing\n");
-		printf("Version 1.91   QA [0]\n");
-		exit(0);
-	}
-
-	for (i = 1;i < _argc;i++)
-	{
-		switch (US_CheckParm(_argv[i],EntryParmStrings))
-		{
-		case 0:
-			LaunchedFromShell = true;
-			break;
-		}
-	}
-
-	if (!LaunchedFromShell)
-	{
-		clrscr();
-		puts("You must type START at the DOS prompt to run KEEN DREAMS.");
+		printf("Copyright 1993 Softdisk Publishing\n");
+		printf("Version 1.92   Rev (0)\n");
 		exit(0);
 	}
 
