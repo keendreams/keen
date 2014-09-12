@@ -377,17 +377,9 @@ void Quit (char *error)
 	clrscr();
 	puts(error);
 	puts("\n");
-	puts("For techinical assistance with running this software, type HELP at");
-	puts("    the DOS prompt or call Gamer's Edge at 1-318-221-8311");
 	exit(1);
   }
-
-	_argc = 2;
-	_argv[1] = "LAST.SHL";
-	_argv[2] = "ENDSCN.SCN";
-	_argv[3] = NULL;
-	if (execv("LOADSCN.EXE", _argv) == -1)
-		Quit("Couldn't find executable LOADSCN.EXE.\n");
+	exit (0);
 }
 
 //===========================================================================
@@ -426,7 +418,6 @@ void InitGame (void)
 	{
 #pragma	warn	-pro
 #pragma	warn	-nod
-		textbackground(0);
 		clrscr();			// we can't include CONIO because of a name conflict
 #pragma	warn	+nod
 #pragma	warn	+pro
@@ -513,6 +504,34 @@ void main (void)
 			LaunchedFromShell = true;
 			break;
 		}
+		if (stricmp(_argv[i], "/VER") == 0)
+		{
+			printf("\nKeen Dreams Shareware Version 1.20  (Rev 1)\n");
+			printf("developed for use with 100%% IBM compatibles\n");
+			printf("that have 640K memory, DOS version 3.3 or later,\n");
+			printf("and an EGA or VGA display adapter.\n");
+			printf("Copyright 1991-1993 Softdisk Publishing.\n");
+			printf("Commander Keen is a trademark of Id Software.\n");
+			exit(0);
+		}
+
+		if (stricmp(_argv[i], "/?") == 0)
+		{
+			printf("\nKeen Dreams Shareware Version 1.20\n");
+			printf("Copyright 1991-1993 Softdisk Publishing.\n\n");
+			printf("Commander Keen is a trademark of Id Software.\n");
+			printf("Type KDREAMS from the DOS prompt to run.\n\n");
+			printf("KDREAMS /COMP for SVGA compatibility mode\n");
+			printf("KDREAMS /NODR stops program hang with the drive still on\n");
+			printf("KDREAMS /NOAL disables AdLib and Sound Blaster detection\n");
+			printf("KDREAMS /NOSB disables Sound Blaster detection\n");
+			printf("KDREAMS /NOJOYS ignores joystick\n");
+			printf("KDREAMS /NOMOUSE ignores mouse\n");
+			printf("KDREAMS /HIDDENCARD overrides video card detection\n");
+			printf("KDREAMS /VER  for version and compatibility information\n");
+			printf("KDREAMS /? for this help information\n");
+			exit(0);
+		}
 	}
 
 	if (!LaunchedFromShell)
@@ -521,6 +540,10 @@ void main (void)
 		puts("You must type START at the DOS prompt to run KEEN DREAMS.");
 		exit(0);
 	}
+
+
+	textcolor(7);
+	textbackground(0);
 
 	InitGame();
 
