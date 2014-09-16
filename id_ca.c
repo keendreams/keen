@@ -272,7 +272,7 @@ boolean CA_LoadFile (char *filename, memptr *ptr)
 = CAL_OptimizeNodes
 =
 = Goes through a huffman table and changes the 256-511 node numbers to the
-= actular address of the node.  Must be called before CAL_HuffExpand
+= actual address of the node.  Must be called before CAL_HuffExpand
 =
 ===============
 */
