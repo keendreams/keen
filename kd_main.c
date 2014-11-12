@@ -495,7 +495,7 @@ void main (void)
 
 	if (stricmp(_argv[1], "/VER") == 0)
 	{
-		printf("\nKeen Dreams version 1.93 (Rev 1)\n");
+		printf("\nKeen Dreams version 1.93  (Rev 1)\n");
 		printf("developed for use with 100%% IBM compatibles\n");
 		printf("that have 640K memory, DOS version 3.3 or later,\n");
 		printf("and an EGA or VGA display adapter.\n");
@@ -508,6 +508,7 @@ void main (void)
 	{
 		printf("\nKeen Dreams version 1.93\n");
 		printf("Copyright 1991-1993 Softdisk Publishing.\n\n");
+		printf("Commander Keen is a trademark of Id Software.\n");
 		printf("Type KDREAMS from the DOS prompt to run.\n\n");
 		printf("KDREAMS /COMP for SVGA compatibility mode\n");
 		printf("KDREAMS /NODR stops program hang with the drive still on\n");
